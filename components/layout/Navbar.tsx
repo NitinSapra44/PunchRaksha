@@ -37,6 +37,7 @@ function IconMenu({ className = "" }: { className?: string }) {
       width={18}
       height={16}
       className={className}
+      priority
     />
   );
 }
