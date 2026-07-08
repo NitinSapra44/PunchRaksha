@@ -129,16 +129,15 @@ export function Navbar() {
 
           {/* Products with dropdown */}
           <li className="relative group h-full flex items-center">
-            {/* Trigger — fills nav height so the hover bridge to dropdown is seamless */}
             <div className="flex items-center gap-1.5 cursor-pointer hover:opacity-80 py-4 relative after:absolute after:bottom-0 after:left-0 after:h-[3px] after:w-0 hover:after:w-full after:bg-primary after:transition-all after:duration-300">
               <span className="txt-header-desktop">Products</span>
               <IconChevronDown className="text-black transition-transform nav-arrow group-hover:rotate-180" />
             </div>
 
-            {/* Dropdown — top-full now aligns to nav bottom, not mid-nav.
-                pt-[10px] provides an invisible hover bridge so the cursor
-                can move from nav into the dropdown without losing group-hover. */}
-            <div className="absolute top-full left-1/2 -translate-x-1/2 pt-[10px] w-[260px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 txt-sub-menu">
+            {/* top-full aligns to the li's bottom edge (the nav border);
+                -translate-y pulls the box up over that border so it's
+                covered instead of showing as a visible seam. */}
+            <div className="absolute top-full left-1/2 -translate-x-1/2 -translate-y-3 w-[260px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 txt-sub-menu">
               <div className="bg-white shadow-[0px_0px_60px_5px_rgba(0,0,0,0.25)] border border-gray-100">
                 <div className="flex flex-col px-[30px] py-[30px]">
                   <Link href="/product/constipation-relief-powder" className="hover:text-primary font-outfit font-medium text-[#121212] transition-colors">
@@ -243,7 +242,7 @@ export function Navbar() {
       {/* ── Mobile sidebar ── */}
       {open ? (
         <div
-          className="absolute top-full left-0 w-full h-[calc(100vh-92px)] z-[60] lg:hidden overflow-hidden bg-black/50"
+          className="absolute top-full left-0 w-full h-[calc(100vh-92px)] z-[60] lg:hidden overflow-hidden"
           style={{ touchAction: "none" }}
           onClick={() => { setOpen(false); setActiveSubMenu(null); }}
         >
