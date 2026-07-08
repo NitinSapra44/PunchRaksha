@@ -149,7 +149,7 @@ export function HeroSection() {
                   alt={slide.alt}
                   width={1920}
                   height={800}
-                  priority={i === 1}
+                  priority
                   className="w-full h-auto object-cover"
                 />
               </div>
@@ -157,10 +157,10 @@ export function HeroSection() {
                 <Image
                   src={slide.mobile}
                   alt={slide.alt}
-                  width={1080} 
-                  height={1080} 
-                  priority={i === 1}
-                  className="w-full h-auto object-cover" 
+                  width={1080}
+                  height={1080}
+                  priority
+                  className="w-full h-auto object-cover"
                 />
               </div>
             </div>

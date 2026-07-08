@@ -55,7 +55,7 @@ export function TestimonialsSection({ showAll = false }: { showAll?: boolean }) 
         <h2 className="mb-8 md:mb-12 text-center font-semibold font-outfit txt-h2-lg">
           <span className="hidden md:block">
             See What Our Customers Say About <br />
-            <span className="md:ml-2">Our Medicines</span>
+            <span className="md:ml-2">Our Products</span>
           </span>
           <span className="block md:hidden leading-[1.3]">
             See What Our Customers <br />

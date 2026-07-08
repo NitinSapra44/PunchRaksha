@@ -136,7 +136,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
         {(product.label || product.subLabel) ? (
           <>
             <Link href={`/product/${product.slug}`}>
-              <h3 className={`txt-h3-lg-alt font-semibold md:font-semibold text-gray-900 mb-1 font-outfit pb-[5px] `}>
+              <h3 className={`txt-h3-lg font-semibold md:font-semibold text-gray-900 mb-1 font-outfit pb-[5px]`}>
                 {product.label || product.subLabel}
               </h3>
             </Link>
