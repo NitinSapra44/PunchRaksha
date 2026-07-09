@@ -78,12 +78,29 @@ export function CustomerReviews({
   });
   const [hoverRating, setHoverRating] = useState(0);
 
+  // Disable background scroll when modal is open (iOS-safe body lock)
   useEffect(() => {
-    if (!isModalOpen) return;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    if (isModalOpen) {
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
+      document.body.style.overflow = "hidden";
+    } else {
+      const scrollY = document.body.style.top;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.overflow = "";
+      window.scrollTo(0, parseInt(scrollY || "0") * -1);
+    }
     return () => {
-      document.body.style.overflow = prevOverflow;
+      const scrollY = document.body.style.top;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.overflow = "";
+      if (scrollY) window.scrollTo(0, parseInt(scrollY) * -1);
     };
   }, [isModalOpen]);
 
@@ -294,7 +311,7 @@ export function CustomerReviews({
       {/* ── Write Review Modal ── */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[100] bg-black/50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-[20px] w-full max-w-[480px] p-[24px] shadow-lg">
+          <div className="bg-white rounded-[20px] w-full max-w-[480px] max-h-[90vh] overflow-y-auto overscroll-contain p-[24px] shadow-lg">
             <div className="flex items-center justify-between mb-[20px]">
               <h4 className="font-outfit txt-h3-lg font-semibold text-[#121212]">Write Review</h4>
               <button onClick={() => setIsModalOpen(false)} className="w-[32px] h-[32px] flex items-center justify-center rounded-full border border-[#E5E5E5] text-[#767676] hover:bg-gray-100 transition-colors">

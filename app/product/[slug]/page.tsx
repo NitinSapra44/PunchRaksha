@@ -50,8 +50,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       title,
       description,
       url: canonicalUrl,
-      // "product" isn't in Next's typed OpenGraphType enum — og:type is rendered
-      // separately as a raw <meta> tag in the page body (see ProductPage below).
       siteName: "PunchRaksha",
       images: [
         {
@@ -122,8 +120,6 @@ export default async function ProductPage({ params }: { params: { slug: string }
 
   return (
     <div className="w-full">
-      {/* openGraph.type only supports the fixed OG enum (no "product") — rendered raw so og:type is spec-correct with property=, not name= */}
-      <meta property="og:type" content="product" />
       <ProductHero
         product={product}
         promoText={product.promoStripEnabled ? product.promoStripText : undefined}

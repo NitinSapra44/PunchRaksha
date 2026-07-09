@@ -707,13 +707,27 @@ export function ProductHero({ product, promoText, overallRating, totalReviews }:
               <div className="mt-[15px] md:mt-[20px] flex flex-col items-start gap-2 w-full">
                 <p className="txt-p-lg xl:hidden">Quantity:</p>
                 <div className="flex w-full items-stretch gap-4">
-                  <div className="inline-flex min-h-[56px] w-[118px] md:w-[163px] shrink-0 items-center justify-between border border-[#121212] rounded-[5px] bg-[#f9faf9] px-2 py-[15px] shadow-sm">
+                  <div className="relative inline-flex min-h-[56px] w-[118px] md:w-[163px] shrink-0 items-center justify-between border border-[#121212] rounded-[5px] bg-[#f9faf9] px-4 py-[15px] shadow-sm">
+                    {/* Invisible full-half hit targets — position:absolute removes them from the flex flow entirely, so they cannot affect the visible buttons' size/position/spacing */}
                     <button
-                      className="relative flex-1 self-stretch p-2 flex items-center justify-center txt-p-lg font-outfit text-[#121212]"
+                      type="button"
+                      className="absolute inset-y-0 left-0 w-1/2"
+                      onClick={() => setQty((q) => Math.max(1, q - 1))}
+                      aria-hidden="true"
+                      tabIndex={-1}
+                    />
+                    <button
+                      type="button"
+                      className="absolute inset-y-0 right-0 w-1/2"
+                      onClick={() => setQty((q) => Math.min(99, q + 1))}
+                      aria-hidden="true"
+                      tabIndex={-1}
+                    />
+                    <button
+                      className="txt-p-lg font-outfit text-[#121212]"
                       onClick={() => setQty((q) => Math.max(1, q - 1))}
                       aria-label="Decrease quantity"
                     >
-                      <span className="absolute -top-[15px] -bottom-[15px] -left-2 right-0" aria-hidden="true" />
                       <SafeImage
                         src="/images/homepage/minus.svg"
                         alt="minus"
@@ -725,11 +739,10 @@ export function ProductHero({ product, promoText, overallRating, totalReviews }:
                       {qty}
                     </span>
                     <button
-                      className="relative flex-1 self-stretch p-2 flex items-center justify-center txt-p-lg font-outfit text-[#121212]"
+                      className="txt-p-lg font-outfit text-[#121212]"
                       onClick={() => setQty((q) => Math.min(99, q + 1))}
                       aria-label="Increase quantity"
                     >
-                      <span className="absolute -top-[15px] -bottom-[15px] left-0 -right-2" aria-hidden="true" />
                       <SafeImage
                         src="/images/homepage/plus.svg"
                         alt="plus"
