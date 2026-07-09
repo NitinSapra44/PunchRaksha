@@ -373,8 +373,9 @@ export function ProductHero({ product, promoText, overallRating, totalReviews }:
 
               {/* Main image / Mobile Swiper */}
               <div className="relative w-full flex-1 overflow-hidden md:px-[20px]">
+                <div className="relative xl:block">
                 {/* Mobile Arrows (On Image) - Centered Vertically */}
-                <div className="absolute top-[181px] -translate-y-1/2 left-4 z-10 flex items-center xl:hidden">
+                <div className="absolute top-1/2 -translate-y-1/2 left-4 z-10 flex items-center xl:hidden">
                   <button
                     onClick={() => scrollMobile("left")}
                     className="flex items-center justify-center rounded-full bg-[#045830]/80 text-white shadow-md active:scale-95 transition-opacity"
@@ -388,7 +389,7 @@ export function ProductHero({ product, promoText, overallRating, totalReviews }:
                     />
                   </button>
                 </div>
-                <div className="absolute top-[181px] -translate-y-1/2 right-4 z-10 flex items-center xl:hidden">
+                <div className="absolute top-1/2 -translate-y-1/2 right-4 z-10 flex items-center xl:hidden">
                   <button
                     onClick={() => scrollMobile("right")}
                     className="flex items-center justify-center rounded-full bg-[#045830]/80 text-white shadow-md active:scale-95 transition-opacity"
@@ -478,6 +479,7 @@ export function ProductHero({ product, promoText, overallRating, totalReviews }:
                       />
                     </button>
                   </div>
+                </div>
                 </div>
 
                 {/* Zoom button — absolute over the image area, xl hidden (desktop has its own) */}
@@ -707,10 +709,11 @@ export function ProductHero({ product, promoText, overallRating, totalReviews }:
                 <div className="flex w-full items-stretch gap-4">
                   <div className="inline-flex min-h-[56px] w-[118px] md:w-[163px] shrink-0 items-center justify-between border border-[#121212] rounded-[5px] bg-[#f9faf9] px-2 py-[15px] shadow-sm">
                     <button
-                      className="flex-1 self-stretch p-2 flex items-center justify-center txt-p-lg font-outfit text-[#121212]"
+                      className="relative flex-1 self-stretch p-2 flex items-center justify-center txt-p-lg font-outfit text-[#121212]"
                       onClick={() => setQty((q) => Math.max(1, q - 1))}
                       aria-label="Decrease quantity"
                     >
+                      <span className="absolute -top-[15px] -bottom-[15px] -left-2 right-0" aria-hidden="true" />
                       <SafeImage
                         src="/images/homepage/minus.svg"
                         alt="minus"
@@ -722,10 +725,11 @@ export function ProductHero({ product, promoText, overallRating, totalReviews }:
                       {qty}
                     </span>
                     <button
-                      className="flex-1 self-stretch p-2 flex items-center justify-center txt-p-lg font-outfit text-[#121212]"
+                      className="relative flex-1 self-stretch p-2 flex items-center justify-center txt-p-lg font-outfit text-[#121212]"
                       onClick={() => setQty((q) => Math.min(99, q + 1))}
                       aria-label="Increase quantity"
                     >
+                      <span className="absolute -top-[15px] -bottom-[15px] left-0 -right-2" aria-hidden="true" />
                       <SafeImage
                         src="/images/homepage/plus.svg"
                         alt="plus"

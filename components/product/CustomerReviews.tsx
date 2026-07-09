@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { toast } from "react-hot-toast";
 import { ButtonBase } from "../ui/ButtonBase";
@@ -77,6 +77,15 @@ export function CustomerReviews({
     rating: 0,
   });
   const [hoverRating, setHoverRating] = useState(0);
+
+  useEffect(() => {
+    if (!isModalOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [isModalOpen]);
 
   const [errors, setErrors] = useState({ guestName: "", guestPhone: "", reviewBody: "", rating: "" });
   const [touched, setTouched] = useState({ guestName: false, guestPhone: false, reviewBody: false });

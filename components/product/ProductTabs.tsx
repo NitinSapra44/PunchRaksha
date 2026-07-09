@@ -37,7 +37,7 @@ function UnifiedTabContent({ tabData, productName, importantNotes }: {
               <InlineImage
                 src={item.image}
                 alt={item.altText || item.label || ""}
-                className="w-[35px] h-[35px] md:w-[52px] md:h-[52px] shrink-0 mt-[2px] md:mt-[5px] min-[1540px]:mt-[8px] overflow-hidden"
+                className="w-[35px] h-[35px] md:w-[52px] md:h-[52px] shrink-0 mt-[2px] md:mt-[5px] min-[1540px]:mt-[8px] 3xl:mt-[5px] overflow-hidden"
               />
             ) : (
               <SafeImage
@@ -45,7 +45,7 @@ function UnifiedTabContent({ tabData, productName, importantNotes }: {
                 alt="bullet"
                 width={19}
                 height={19}
-                className="mt-[2px] md:mt-[5px] min-[1540px]:mt-[8px] shrink-0"
+                className="mt-[2px] md:mt-[5px] min-[1540px]:mt-[8px] 3xl:mt-[5px] shrink-0"
               />
             )}
             <p className="text-[#121212] txt-p-lg ml-[5px]">
@@ -105,7 +105,7 @@ function HowToUseIcon({ type }: { type: string }) {
   if (type.startsWith("step")) {
     const stepNum = type.replace("step", "");
     return (
-      <div className="w-[40px] h-[40px] md:w-[52px] md:h-[52px] rounded-full bg-[#3D8F45] text-white flex items-center justify-center font-bold text-[18px] md:text-[22px] shrink-0">
+      <div className="w-[40px] h-[40px] md:w-[52px] md:h-[52px] rounded-full bg-[#3D8F45] text-white flex items-center justify-center font-bold text-[18px] md:text-[22px] shrink-0 3xl:mt-[5px]">
         {stepNum}
       </div>
     );
@@ -188,7 +188,7 @@ function IngredientsTab({ product, ingredients }: { product?: any; ingredients: 
           {product?.ingredientsHeading || "Ingredients"}
         </h2>
         <p className="text-[#121212] txt-p-lg">
-          PunchRaksha is a potent blend of 100% natural and herbal ingredients, and designed to address the underlying causes of digestive distress and eliminate piles from the roots.
+          {product?.ingredientsDescription || "PunchRaksha is a potent blend of 100% natural and herbal ingredients, and designed to address the underlying causes of digestive distress and eliminate piles from the roots."}
         </p>
       </div>
 
@@ -199,7 +199,7 @@ function IngredientsTab({ product, ingredients }: { product?: any; ingredients: 
             <div key={idx} className="flex flex-col items-center text-center ingredient-px">
               <div className="w-[100px] h-[100px] rounded-full overflow-hidden border-[4px] border-[#eaf5ef] shadow-sm mb-[10px]">
                 {ing.image ? (
-                  <SafeImage src={ing.image} alt={ing.name} width={100} height={100} className="w-full h-full object-cover" />
+                  <SafeImage src={ing.image} alt={ing.altText || ing.name} width={100} height={100} className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full bg-[#f5fbf8]" />
                 )}
@@ -237,7 +237,7 @@ function IngredientsTab({ product, ingredients }: { product?: any; ingredients: 
           <div key={idx} className="flex flex-col items-center text-center ingredient-px">
             <div className="w-[135px] h-[135px] rounded-full overflow-hidden border-[4px] border-[#eaf5ef] shadow-sm mb-[10px] md:mb-[15px]">
               {ing.image ? (
-                <SafeImage src={ing.image} alt={ing.name} width={135} height={135} className="w-full h-full object-cover" />
+                <SafeImage src={ing.image} alt={ing.altText || ing.name} width={135} height={135} className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full bg-[#f5fbf8]" />
               )}
@@ -561,6 +561,10 @@ export function ProductTabs({ product, className = "" }: { product?: any, classN
             </h2>
 
             <div className="space-y-[15px] md:space-y-[20px] text-[#121212]">
+
+              {productDetails.product && (
+                <p className="txt-p-lg"><b className="font-semibold">Product:</b> {productDetails.product}</p>
+              )}
 
               <p className="txt-p-lg"><b className="font-semibold">Brand:</b> {productDetails.brand || "PunchRaksha"}</p>
 

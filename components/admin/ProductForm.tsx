@@ -199,6 +199,7 @@ export function ProductForm({ initialData = {}, isEdit = false }: Props) {
 
 
   // Product Info tab
+  const [dProduct, setDProduct] = useState((initialData.productDetails as any)?.product || "");
   const [dBrand, setDBrand] = useState(initialData.productDetails?.brand || "PunchRaksha");
   const [dLife, setDLife] = useState(initialData.productDetails?.shelfLife || "24 Months");
   const [dForm, setDForm] = useState(initialData.productDetails?.dosageForm || "Capsules");
@@ -220,6 +221,7 @@ export function ProductForm({ initialData = {}, isEdit = false }: Props) {
 
   // Ingredients
   const [ingredientsHeading, setIngredientsHeading] = useState((initialData as any).ingredientsHeading || "");
+  const [ingredientsDescription, setIngredientsDescription] = useState((initialData as any).ingredientsDescription || "");
   const [ingredients, setIngredients] = useState<{ name: string; description: string; image: string; altText: string }[]>(
     (initialData.ingredients as any) || []
   );
@@ -375,8 +377,8 @@ export function ProductForm({ initialData = {}, isEdit = false }: Props) {
       inStock, isBestSelling, isUpsellProduct, codAvailable,
       tabs: contentTabs,
       importantNotes: importantNotes.split("\n").map((s: string) => s.trim()).filter(Boolean),
-      productDetails: { brand: dBrand, shelfLife: dLife, dosageForm: dForm, netQuantity: dQty, tabTitle: dTabTitle, productLabel: dProductLabel, fullDescription: dFull, taste: dTaste, bestTimeToConsume: dBestTime, expectedReliefTime: dReliefTime, includedProducts: dIncluded },
-      faqs, ingredients, ingredientsHeading, packOptions, linkedTestimonialIds, testimonialsHeading, relatedProductIds, tags,
+      productDetails: { product: dProduct, brand: dBrand, shelfLife: dLife, dosageForm: dForm, netQuantity: dQty, tabTitle: dTabTitle, productLabel: dProductLabel, fullDescription: dFull, taste: dTaste, bestTimeToConsume: dBestTime, expectedReliefTime: dReliefTime, includedProducts: dIncluded },
+      faqs, ingredients, ingredientsHeading, ingredientsDescription, packOptions, linkedTestimonialIds, testimonialsHeading, relatedProductIds, tags,
       metaTitle, metaDescription: metaDesc, ogTitle, ogDescription: ogDesc, ogImageUrl, ogImageAlt,
       twitterTitle, twitterDescription: twitterDesc, customScript,
       linkedBlogSlugs, heroUsps: heroUsps.filter(Boolean), promoStripEnabled, promoStripText, featuredImage, featuredImageAlt, featuredLabel, featuredSubLabel,
@@ -576,6 +578,7 @@ export function ProductForm({ initialData = {}, isEdit = false }: Props) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="md:col-span-2"><label className="field-label">Tab Heading <span className="text-gray-400 font-normal text-xs normal-case">(leave blank for &ldquo;Product Details&rdquo;)</span></label><input value={dTabTitle} onChange={e => setDTabTitle(e.target.value)} placeholder="e.g. About Ayurvedic Piles Medicine" className="field-input text-sm" /></div>
               <div className="md:col-span-2"><label className="field-label">Product Label <span className="text-gray-400 font-normal text-xs normal-case">(leave blank for &ldquo;About [product name]&rdquo;)</span></label><input value={dProductLabel} onChange={e => setDProductLabel(e.target.value)} placeholder="e.g. Ayurvedic Piles Medicine" className="field-input text-sm" /></div>
+              <div><label className="field-label">Product</label><input value={dProduct} onChange={e => setDProduct(e.target.value)} className="field-input text-sm" /></div>
               <div><label className="field-label">Brand</label><input value={dBrand} onChange={e => setDBrand(e.target.value)} className="field-input text-sm" /></div>
               <div><label className="field-label">Shelf Life</label><input value={dLife} onChange={e => setDLife(e.target.value)} className="field-input text-sm" /></div>
               <div><label className="field-label">Dosage Form</label><input value={dForm} onChange={e => setDForm(e.target.value)} className="field-input text-sm" /></div>
@@ -634,6 +637,10 @@ export function ProductForm({ initialData = {}, isEdit = false }: Props) {
             <div>
               <label className="field-label">Section Heading (H2) <span className="text-gray-400 font-normal text-xs normal-case">(leave blank for &ldquo;Ingredients&rdquo;)</span></label>
               <input value={ingredientsHeading} onChange={e => setIngredientsHeading(e.target.value)} placeholder="e.g. Natural Ingredients" className="field-input text-sm" />
+            </div>
+            <div>
+              <label className="field-label">Description <span className="text-gray-400 font-normal text-xs normal-case">(leave blank for the default text)</span></label>
+              <textarea value={ingredientsDescription} onChange={e => setIngredientsDescription(e.target.value)} placeholder="e.g. PunchRaksha is a potent blend of 100% natural and herbal ingredients..." rows={3} className="field-input text-sm" />
             </div>
             <div className="flex items-center justify-between">
               <label className="field-label mb-0">Ingredients</label>
