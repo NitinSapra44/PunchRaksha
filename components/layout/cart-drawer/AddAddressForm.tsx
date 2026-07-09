@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, forwardRef, useImperativeHandle, useRef, useEffect } from "react";
+import { useState, forwardRef, useImperativeHandle, useRef } from "react";
 import { z } from "zod";
-import { lookupPincode } from "@/lib/utils/pincodeLookup";
 
 export type NewAddress = {
   fullName: string;
@@ -91,33 +90,20 @@ export const AddAddressForm = forwardRef<
 
 
   const [touched, setTouched] = useState<Record<string, boolean>>({});
-  const [pincodeLookupLoading, setPincodeLookupLoading] = useState(false);
-  const [pincodeLookupError, setPincodeLookupError] = useState<string | null>(null);
 
   const touch = (k: string) => setTouched((t) => ({ ...t, [k]: true }));
 
   const set = (k: keyof NewAddress, v: any) => setForm({ ...form, [k]: v });
 
-  const handlePincodeLookup = async (pincode: string) => {
-    setPincodeLookupLoading(true);
-    setPincodeLookupError(null);
-    const result = await lookupPincode(pincode);
-    if (result) {
-      setForm((f) => ({ ...f, city: result.city, state: result.state }));
-    } else {
-      setForm((f) => ({ ...f, city: "", state: "" }));
-      setPincodeLookupError("Couldn't detect city/state for this pincode");
-    }
-    setPincodeLookupLoading(false);
-  };
-
+  // city/state are no longer collected here — the Address field covers the
+  // full postal address as free text. They're kept on NewAddress only because
+  // downstream (Shiprocket, order records) still reads those fields; the
+  // server defaults them when blank.
   const addressSchema = z.object({
     fullName: z.string().min(1, "Name is required"),
     phone: z.string().regex(/^[6-9]\d{9}$/, "Valid mobile required"),
     address: z.string().min(40, "Address must be at least 40 characters"),
     pincode: z.string().regex(/^\d{6}$/, "Valid pincode required"),
-    city: z.string().min(1, "Couldn't detect city — re-check pincode"),
-    state: z.string().min(1, "Couldn't detect state — re-check pincode"),
     type: z.enum(["Home", "Office", "Other"]),
   });
 
@@ -236,7 +222,7 @@ export const AddAddressForm = forwardRef<
               </span>
               {touched.pincode && errors.pincode && (
                 <span className="txt-p text-red-600 font-outfit text-[12px]">
-                  {pincodeLookupLoading ? "Detecting city/state..." : errors.pincode[0]}
+                  {errors.pincode[0]}
                 </span>
               )}
             </div>
@@ -251,7 +237,6 @@ export const AddAddressForm = forwardRef<
                 if (val.length === 6) {
                   touch("pincode");
                   pincodeRef.current?.blur();
-                  handlePincodeLookup(val);
                 }
               }}
               onBlur={() => touch("pincode")}
